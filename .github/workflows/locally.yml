@@ -1,0 +1,57 @@
+# Deploys this example to Locally the same way its README does, then tears it
+# down again - so a change that stops the example deploying fails its PR.
+name: Locally
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: locally-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Deploy to Locally
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # required: Locally signs in using GitHub's OIDC token
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: hashicorp/setup-terraform@dfe3c3f87815947d99a8997f908cb6525fc44e9e # v4.0.1
+        with:
+          terraform_wrapper: false
+
+      - uses: locallybuild/setup-locally@v1
+        with:
+          team-uuid: ${{ vars.LOCALLY_TEAM_UUID }}
+          plugins: custom
+          plugins-list: |
+            Microsoft.ContainerRegistry
+            Microsoft.DBforMySQL
+            Microsoft.Insights
+            Microsoft.OperationalInsights
+            Microsoft.Web
+
+      - name: Apply environments/locally
+        id: apply0
+        working-directory: environments/locally
+        run: |
+          terraform init -input=false
+          locally run terraform apply -auto-approve -input=false
+
+      - name: Destroy environments/locally
+        # Only once there's something to destroy.
+        if: always() && steps.apply0.outcome != 'skipped'
+        working-directory: environments/locally
+        run: locally run terraform destroy -auto-approve -input=false
+
+      - uses: locallybuild/setup-locally/teardown@v1
+        if: always()
