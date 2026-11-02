@@ -1,0 +1,46 @@
+version: 2
+updates:
+  # Terraform providers
+  - package-ecosystem: "terraform"
+    directories:
+      - "/environments/locally"
+      - "/modules/app-service-mysql"
+    schedule:
+      interval: "weekly"
+    groups:
+      terraform:
+        patterns:
+          - "*"
+
+  # Python dependencies
+  - package-ecosystem: "pip"
+    directories:
+      - "/app"
+    schedule:
+      interval: "weekly"
+    groups:
+      pip:
+        patterns:
+          - "*"
+
+  # Container base images
+  - package-ecosystem: "docker"
+    directories:
+      - "/app"
+    schedule:
+      interval: "weekly"
+    groups:
+      docker:
+        patterns:
+          - "*"
+
+  # GitHub Actions used by the CI
+  - package-ecosystem: "github-actions"
+    directories:
+      - "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
