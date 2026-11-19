@@ -1,4 +1,4 @@
-FROM python:3.12-slim
+FROM python:3.15-slim
 
 # Flush logs straight to stdout so they reach AppServiceConsoleLogs.
 ENV PYTHONUNBUFFERED=1 \
