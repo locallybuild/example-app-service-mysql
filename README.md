@@ -26,6 +26,8 @@ The app authenticates to MySQL using a **user-assigned managed identity**, which
 * The Locally Plugin for `Microsoft.DBforMySQL` installed (`locally plugin install --name Microsoft.DBforMySQL`).
 * The Locally Plugin for `Microsoft.Web` installed (`locally plugin install --name Microsoft.Web`).
 * The Locally Plugin for `Microsoft.ContainerRegistry` installed (`locally plugin install --name Microsoft.ContainerRegistry`).
+* The Locally Plugin for `Microsoft.Insights` installed (`locally plugin install --name Microsoft.Insights`).
+* The Locally Plugin for `Microsoft.OperationalInsights` installed (`locally plugin install --name Microsoft.OperationalInsights`).
 
 ## Running the example
 
