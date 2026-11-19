@@ -45,7 +45,7 @@ terraform init
 ```
 
 > [!NOTE]
-> It's possible to use OpenTofu here by substituting `terraform` for `tofu`.
+> You can use OpenTofu instead by running `tofu` wherever this says `terraform`.
 
 With Terraform initialised, we can then provision the example by running:
 
