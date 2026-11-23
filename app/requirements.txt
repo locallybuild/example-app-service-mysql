@@ -1,6 +1,6 @@
-fastapi==0.163.1
+fastapi==0.165.0
 uvicorn==0.54.0
 python-multipart==0.0.34
-SQLAlchemy==2.1.8
+SQLAlchemy==2.1.9
 PyMySQL==1.2.4
 azure-identity==1.27.0
